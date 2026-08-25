@@ -13,7 +13,9 @@
 	</div>
 	<div class="details">
 		{#if game.isLive}<span class="live-dot"></span>{/if}
-		<p class="det">{game.period}</p>
+		{#each game.periodLines as line (line)}
+			<p class="det">{line}</p>
+		{/each}
 	</div>
 </li>
 

@@ -16,9 +16,18 @@ function mapNflStatus(state) {
 	}
 }
 
+
 export function normalizeMlbGame(g) {
 	const away = g.teams.away, home = g.teams.home;
 	const status = mapMlbStatus(g.status.abstractGameState);
+
+	let periodLines = [g.status.detailedState];
+	if (status === 'live') {
+		const half = g.linescore?.inningState ?? '';
+		const inning = g.linescore?.currentInning ?? '';
+		const outs = g.linescore?.outs ?? 0;
+		periodLines = [`${half} ${inning}`.trim(), `${outs} Out${outs === 1 ? '' : 's'}`];
+	}
 
 	return {
 		away: {
@@ -31,9 +40,7 @@ export function normalizeMlbGame(g) {
 			record: `${home.leagueRecord.wins}-${home.leagueRecord.losses}`,
 			score: home.score ?? null
 		},
-		period: status === 'live'
-			? `${g.linescore?.inningState ?? ''} ${g.linescore?.currentInning ?? ''}`.trim()
-			: g.status.detailedState,
+		periodLines,
 		status,
 		isLive: status === 'live'
 	};
@@ -41,14 +48,22 @@ export function normalizeMlbGame(g) {
 
 export function normalizeNflGame(event) {
 	const comp = event.competitions[0];
-	const away = comp.competitors.find(c => c.homeAway === 'away');
-	const home = comp.competitors.find(c => c.homeAway === 'home');
+	const away = comp.competitors.find((c) => c.homeAway === 'away');
+	const home = comp.competitors.find((c) => c.homeAway === 'home');
 	const status = mapNflStatus(event.status.type.state);
+
+	let periodLines = [event.status.type.shortDetail];
+	if (status === 'live') {
+		const quarter = event.status.period;
+		const clock = event.status.displayClock;
+		const qLabel = quarter > 4 ? 'OT' : `${quarter}${['st', 'nd', 'rd', 'th'][quarter - 1] ?? 'th'}`;
+		periodLines = [qLabel, clock];
+	}
 
 	return {
 		away: { name: away.team.displayName, record: away.records?.[0]?.summary ?? '', score: away.score ?? null },
 		home: { name: home.team.displayName, record: home.records?.[0]?.summary ?? '', score: home.score ?? null },
-		period: event.status.type.shortDetail,
+		periodLines,
 		status,
 		isLive: status === 'live'
 	};

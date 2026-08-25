@@ -3,7 +3,7 @@
 	import { page } from '$app/state';
 	import GameListTile from '$lib/components/GameListTile.svelte';
 	import { addDays } from '$lib/normalize.js';
-    import { formatDisplayDate } from '$lib/normalize.js';
+	import { formatDisplayDate } from '$lib/normalize.js';
 
 	let { data } = $props();
 
@@ -52,6 +52,9 @@
 </div>
 <ul class="game-list">
 	{#each data.games as game (game.id)}
+		{#if data.games.length === 0}
+			<p class="empty">No games found.</p>
+		{/if}
 		<GameListTile {game} />
 	{/each}
 </ul>

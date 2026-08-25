@@ -16,7 +16,9 @@ export async function load({ url, fetch }) {
 }
 
 async function loadMlbGames(fetch, date) {
-	const res = await fetch(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${date}`);
+	const res = await fetch(
+		`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${date}&hydrate=linescore`
+	);
 	if (!res.ok) return [];
 	const data = await res.json();
 	const games = data.dates?.[0]?.games ?? [];
