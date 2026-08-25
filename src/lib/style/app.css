@@ -1,0 +1,13 @@
+* {
+	box-sizing: border-box;
+}
+
+:root {
+	font-family: 'Nimbus Mono PS', 'Courier New', monospace;
+
+    --clr-accent: #0C2C56;
+    --clr-accent: #69BE28;
+
+	background-color: var(--clr-dark, #000);
+	color: var(--clr-light, #fff);
+}
