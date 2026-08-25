@@ -69,20 +69,46 @@ export function normalizeNflGame(event) {
 	};
 }
 
-// Given any date, return the Thursday that starts its NFL week.
-// Thu/Fri/Sat/Sun/Mon all belong to the week starting that Thursday.
-// Tue/Wed (the "gap" after Monday night) roll forward to the next Thursday.
-export function getNflWeekStart(dateStr) {
-	const d = new Date(dateStr + 'T00:00:00');
-	const day = d.getDay(); // 0=Sun ... 4=Thu ... 6=Sat
 
-	if (day === 2 || day === 3) {
-		d.setDate(d.getDate() + (4 - day)); // roll forward to Thursday
-	} else {
-		const diff = (day - 4 + 7) % 7; // days since most recent Thursday
-		d.setDate(d.getDate() - diff);
+export function toPacificDateStr(isoUtc) {
+	const parts = new Intl.DateTimeFormat('en-CA', {
+		timeZone: 'America/Los_Angeles',
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit'
+	}).formatToParts(new Date(isoUtc));
+	const map = Object.fromEntries(parts.map((p) => [p.type, p.value]));
+	return `${map.year}-${map.month}-${map.day}`;
+}
+
+
+
+// Flattens ESPN's calendar (grouped by season type) into one chronological list
+export function flattenNflCalendar(calendar) {
+	const weeks = [];
+	for (const group of calendar ?? []) {
+		for (const entry of group.entries ?? []) {
+			weeks.push({
+				label: entry.label, // e.g. "Preseason Week 2", "Wild Card"
+				startDate: toPacificDateStr(entry.startDate),
+				endDate: toPacificDateStr(entry.endDate)
+			});
+		}
 	}
-	return d.toISOString().slice(0, 10);
+	return weeks; // already in chronological order
+}
+
+// Finds the week entry for a given Pacific date string, or the current/next week if omitted
+export function findNflWeek(weeks, weekParam) {
+	if (weekParam) {
+		const idx = weeks.findIndex((w) => w.startDate === weekParam);
+		if (idx !== -1) return idx;
+	}
+	const today = todayStr();
+	let idx = weeks.findIndex((w) => today >= w.startDate && today <= w.endDate);
+	if (idx === -1) idx = weeks.findIndex((w) => w.startDate > today);
+	if (idx === -1) idx = weeks.length - 1; // season over, show last week
+	return idx;
 }
 
 export function todayStr() {

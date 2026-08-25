@@ -2,30 +2,27 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import GameListTile from '$lib/components/GameListTile.svelte';
-	import { addDays } from '$lib/normalize.js';
-	import { formatDisplayDate } from '$lib/normalize.js';
+	import { addDays, formatDisplayDate } from '$lib/normalize.js';
 
 	let { data } = $props();
 
 	function setLeague(newLeague) {
-		const params = new URLSearchParams(page.url.searchParams);
+		const params = new URLSearchParams();
 		params.set('league', newLeague);
-		params.delete('date');
 		goto(`?${params}`, { keepFocus: true });
 	}
 
-	function shiftDate(direction) {
-		const step = data.league === 'nfl' ? 7 : 1;
+	function shiftMlbDate(direction) {
 		const params = new URLSearchParams(page.url.searchParams);
-		params.set('date', addDays(data.date, direction * step));
+		params.set('date', addDays(data.date, direction));
 		goto(`?${params}`, { keepFocus: true });
 	}
 
-	function formatShort(dateStr) {
-		return new Date(dateStr + 'T00:00:00').toLocaleDateString(undefined, {
-			month: 'short',
-			day: 'numeric'
-		});
+	function goToNflWeek(weekParam) {
+		if (!weekParam) return;
+		const params = new URLSearchParams(page.url.searchParams);
+		params.set('week', weekParam);
+		goto(`?${params}`, { keepFocus: true });
 	}
 </script>
 
@@ -40,21 +37,26 @@
 
 <h2>{data.league.toUpperCase()}</h2>
 <div class="date-nav">
-	<button class="prev" onclick={() => shiftDate(-1)}>prev</button>
-	<h3>
-		{#if data.league === 'nfl'}
-			{formatDisplayDate(data.date)} – {formatDisplayDate(data.weekEnd)}
-		{:else}
-			{formatDisplayDate(data.date)}
-		{/if}
-	</h3>
-	<button class="next" onclick={() => shiftDate(1)}>next</button>
+	{#if data.league === 'nfl'}
+		<button
+			class="prev"
+			disabled={!data.prevWeekParam}
+			onclick={() => goToNflWeek(data.prevWeekParam)}>prev</button
+		>
+		<h3>{data.weekLabel}</h3>
+		<button
+			class="next"
+			disabled={!data.nextWeekParam}
+			onclick={() => goToNflWeek(data.nextWeekParam)}>next</button
+		>
+	{:else}
+		<button class="prev" onclick={() => shiftMlbDate(-1)}>prev</button>
+		<h3>{formatDisplayDate(data.date)}</h3>
+		<button class="next" onclick={() => shiftMlbDate(1)}>next</button>
+	{/if}
 </div>
 <ul class="game-list">
 	{#each data.games as game (game.id)}
-		{#if data.games.length === 0}
-			<p class="empty">No games found.</p>
-		{/if}
 		<GameListTile {game} />
 	{/each}
 </ul>
