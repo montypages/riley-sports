@@ -24,6 +24,9 @@
 		params.set('week', weekParam);
 		goto(`?${params}`, { keepFocus: true });
 	}
+
+
+
 </script>
 
 <nav>
@@ -35,24 +38,33 @@
 	</button>
 </nav>
 
+
 <h2>{data.league.toUpperCase()}</h2>
 <div class="date-nav">
 	{#if data.league === 'nfl'}
 		<button
 			class="prev"
 			disabled={!data.prevWeekParam}
-			onclick={() => goToNflWeek(data.prevWeekParam)}>prev</button
+			onclick={() => goToNflWeek(data.prevWeekParam)}
 		>
+			<span class="material-symbols-outlined"> chevron_left </span>
+		</button>
 		<h3>{data.weekLabel}</h3>
 		<button
 			class="next"
 			disabled={!data.nextWeekParam}
-			onclick={() => goToNflWeek(data.nextWeekParam)}>next</button
+			onclick={() => goToNflWeek(data.nextWeekParam)}
 		>
+			<span class="material-symbols-outlined"> chevron_right </span>
+		</button>
 	{:else}
-		<button class="prev" onclick={() => shiftMlbDate(-1)}>prev</button>
+		<button class="prev" onclick={() => shiftMlbDate(-1)}>
+			<span class="material-symbols-outlined"> chevron_left </span>
+		</button>
 		<h3>{formatDisplayDate(data.date)}</h3>
-		<button class="next" onclick={() => shiftMlbDate(1)}>next</button>
+		<button class="next" onclick={() => shiftMlbDate(1)}>
+			<span class="material-symbols-outlined"> chevron_right </span>
+		</button>
 	{/if}
 </div>
 <ul class="game-list">
@@ -92,6 +104,8 @@
 	}
 
 	.date-nav {
+		margin: 0 auto;
+		width: min(95%, 800px);
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -101,5 +115,11 @@
 		margin: 0;
 		padding: 0;
 		list-style: none;
+	}
+
+	.prev, .next {
+		padding: 0 1em;
+		border-radius: 100vw;
+		border: 1px solid #444;
 	}
 </style>

@@ -16,6 +16,7 @@
 <svelte:head>
 	<link rel="icon" href={favicon} />
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </svelte:head>
 
 <h1>Riley's Sports App</h1>

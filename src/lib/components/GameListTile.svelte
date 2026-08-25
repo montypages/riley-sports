@@ -34,6 +34,7 @@
 	.details {
 		border-left: 1px solid #444;
 		padding: 0 1em;
+		position: relative;
 	}
 
 	.scores {
@@ -44,13 +45,16 @@
 	li.live {
 		border-color: var(--clr-accent, red);
 	}
+	
 	.live-dot {
 		display: inline-block;
+		position: absolute;
+		right: 0; top: 50%;
 		width: 0.5em;
 		height: 0.5em;
 		border-radius: 50%;
 		background: var(--clr-accent, red);
-		margin-right: 0.4em;
+		transform: translate(100%, -50%);
 		animation: pulse 1.5s ease-in-out infinite;
 	}
 	@keyframes pulse {
