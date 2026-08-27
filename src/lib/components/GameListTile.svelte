@@ -3,12 +3,12 @@
 </script>
 
 <li class="game" class:live={game.isLive}>
-	<div class="teams">
+	<div class="away">
 		<p class="team">{game.away.name} <span>({game.away.record})</span></p>
-		<p class="team">{game.home.name} <span>({game.home.record})</span></p>
-	</div>
-	<div class="scores">
 		<p class="score">{game.away.score ?? '–'}</p>
+	</div>
+	<div class="home">
+		<p class="team">{game.home.name} <span>({game.home.record})</span></p>
 		<p class="score">{game.home.score ?? '–'}</p>
 	</div>
 	<div class="details">
