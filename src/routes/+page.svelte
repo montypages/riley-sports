@@ -121,5 +121,6 @@
 		padding: 0 1em;
 		border-radius: 100vw;
 		border: 1px solid #444;
+		color: var(--clr-dark, #000)
 	}
 </style>
