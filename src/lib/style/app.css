@@ -10,3 +10,9 @@
 	background-color: var(--clr-dark, #000);
 	color: var(--clr-light, #fff);
 }
+
+
+.container {
+	width: min(95%, 800px);
+	margin: 0 auto;
+}

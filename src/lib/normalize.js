@@ -30,6 +30,7 @@ export function normalizeMlbGame(g) {
 	}
 
 	return {
+		league: 'mlb',
 		away: {
 			name: away.team.name,
 			record: `${away.leagueRecord.wins}-${away.leagueRecord.losses}`,
@@ -61,6 +62,7 @@ export function normalizeNflGame(event) {
 	}
 
 	return {
+		league: 'nfl',
 		away: { name: away.team.displayName, record: away.records?.[0]?.summary ?? '', score: away.score ?? null },
 		home: { name: home.team.displayName, record: home.records?.[0]?.summary ?? '', score: home.score ?? null },
 		periodLines,
