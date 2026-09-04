@@ -1,5 +1,20 @@
 <script>
+	import BaseBug from "$lib/components/BaseBug.svelte";
+	import { invalidate } from '$app/navigation';
+	import { page } from '$app/state';
+
 	let { data } = $props();
+	let intervalId;
+
+	$effect(() => {
+		if (data.status === 'Live') {
+			intervalId = setInterval(() => {
+				invalidate(`game:${page.params.id}`);
+				console.log("updating...");
+			}, 10000);
+		}
+		return () => clearInterval(intervalId);
+	});
 </script>
 
 <a href="/" class="back-link">← Back to games</a>
@@ -7,6 +22,16 @@
 <div class="score-banner container">
 	<h2 class="team"><span class="name">{data.away.name}</span><span class="score">{data.away.score}</span></h2>
 	<h2 class="team"><span class="name">{data.home.name}</span><span class="score">{data.home.score}</span></h2>
+	{#if data.league === 'mlb'}
+		{#if data.status === 'Live'}
+			<div class="game-bug">
+				<BaseBug offense={data.offense} />
+				<h3>{data.inning}</h3>
+			</div>
+		{:else}
+			<h3 class="center-text">{data.status}</h3>
+		{/if}
+	{/if}
 </div>
 
 <table class="periods container">
@@ -61,4 +86,18 @@
         display: flex;
         justify-content: space-between;
     }
+
+	.back-link {
+		color: var(--clr-accent, green);
+	}
+
+	.game-bug {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+	}
+
+	.center-text {
+		text-align: center;
+	}
 </style>

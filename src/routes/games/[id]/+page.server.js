@@ -1,23 +1,39 @@
 import { error } from '@sveltejs/kit';
 
-export async function load({ params, url, fetch }) {
+export async function load({ params, url, fetch, depends }) {
 	const league = url.searchParams.get('league');
-	if (league === 'mlb') return loadMlbGameDetail(fetch, params.id);
-	if (league === 'nfl') return loadNflGameDetail(fetch, params.id);
+
+	if (league === 'mlb') {
+		depends(`game:${params.id}`);
+		return loadMlbGameDetail(fetch, params.id);
+	}
+	if (league === 'nfl') {
+		depends(`game:${params.id}`);
+		return loadNflGameDetail(fetch, params.id);
+	}
+
 	throw error(400, 'Missing or invalid league');
 }
 
 async function loadMlbGameDetail(fetch, gamePk) {
-	const [boxRes, lineRes] = await Promise.all([
+	const [boxRes, lineRes, scheduleRes] = await Promise.all([
 		fetch(`https://statsapi.mlb.com/api/v1/game/${gamePk}/boxscore`),
-		fetch(`https://statsapi.mlb.com/api/v1/game/${gamePk}/linescore`)
+		fetch(`https://statsapi.mlb.com/api/v1/game/${gamePk}/linescore`),
+		fetch(`https://statsapi.mlb.com/api/v1/schedule?gamePk=${gamePk}`)
 	]);
 	const box = await boxRes.json();
 	const line = await lineRes.json();
+	const schedule = await scheduleRes.json();
+
 	const away = box.teams.away, home = box.teams.home;
+	const inning = `${line.inningState} ${line.currentInningOrdinal}`;
+	const offense = line.offense;
+	const game = schedule.dates?.[0]?.games?.[0];
+	const status = game?.status?.abstractGameState; 
 
 	return {
 		league: 'mlb',
+		status: status,
 		away: { name: away.team.name, score: line.teams?.away?.runs ?? 0 },
 		home: { name: home.team.name, score: line.teams?.home?.runs ?? 0 },
 		periods: line.innings.map((inn) => ({
@@ -28,6 +44,13 @@ async function loadMlbGameDetail(fetch, gamePk) {
 		players: {
 			away: extractMlbPlayers(away),
 			home: extractMlbPlayers(home)
+		},
+		inning: inning,
+		offense: {
+			outs: line.outs,
+			first: offense.first,
+			second: offense.second,
+			third: offense.third
 		}
 	};
 }
