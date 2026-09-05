@@ -34,8 +34,8 @@ async function loadMlbGameDetail(fetch, gamePk) {
 	return {
 		league: 'mlb',
 		status: status,
-		away: { name: away.team.name, score: line.teams?.away?.runs ?? 0 },
-		home: { name: home.team.name, score: line.teams?.home?.runs ?? 0 },
+		away: { name: away.team.name, abbreviation: away.team.abbreviation, score: line.teams?.away?.runs ?? 0 },
+		home: { name: home.team.name, abbreviation: home.team.abbreviation, score: line.teams?.home?.runs ?? 0 },
 		periods: line.innings.map((inn) => ({
 			label: inn.ordinalNum,
 			away: inn.away?.runs ?? '-',

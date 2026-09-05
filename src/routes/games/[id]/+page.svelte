@@ -1,5 +1,6 @@
 <script>
 	import BaseBug from "$lib/components/BaseBug.svelte";
+	import BattingCount from "$lib/components/BattingCount.svelte";
 	import { invalidate } from '$app/navigation';
 	import { page } from '$app/state';
 
@@ -20,18 +21,27 @@
 <a href="/" class="back-link">← Back to games</a>
 
 <div class="score-banner container">
-	<h2 class="team"><span class="name">{data.away.name}</span><span class="score">{data.away.score}</span></h2>
-	<h2 class="team"><span class="name">{data.home.name}</span><span class="score">{data.home.score}</span></h2>
+	<h2 class="team">
+		<span class="name">{data.away.abbreviation}</span>
+		<span class="score">{data.away.score}</span></h2>
 	{#if data.league === 'mlb'}
 		{#if data.status === 'Live'}
 			<div class="game-bug">
-				<BaseBug offense={data.offense} />
 				<h3>{data.inning}</h3>
+				<BaseBug offense={data.offense} />
 			</div>
 		{:else}
 			<h3 class="center-text">{data.status}</h3>
 		{/if}
 	{/if}
+	<h2 class="team">
+		<span class="score">{data.home.score}</span>
+		<span class="name">{data.home.abbreviation}</span>
+	</h2>
+</div>
+
+<div class="container">
+	<BattingCount />
 </div>
 
 <table class="periods container">
@@ -99,5 +109,25 @@
 
 	.center-text {
 		text-align: center;
+	}
+
+	.score-banner {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.team {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.score {
+		font-size: 3rem;
+	}
+
+	.game-bug {
+		display: flex;
+		gap: 1rem;
 	}
 </style>
