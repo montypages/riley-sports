@@ -5,24 +5,6 @@ This is a sports app I built for my son, Riley so he can keep up with his favori
 ## Upgrades
 
 ### MLB Games
-
-- Show top/bot inning
-- Show diamond/outs
-- At bat
-    - Pitching (team)
-        - Innings pitched
-        - Pitch count
-        - ER, K, R/L
-    - Batting (team)
-        - hits - at-bats
-        - Avg, R/L/S
-    - Strike Zone
-        - Pitch location, pitch number
-        - Ball/Strike (green/red)
-    - Count
-        - Balls
-        - Strikes
-        - Outs
 - Due Up
     - On Deck
         - hits - at-bats
