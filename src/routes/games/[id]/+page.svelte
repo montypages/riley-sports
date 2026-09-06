@@ -3,6 +3,8 @@
 	import BattingCount from "$lib/components/BattingCount.svelte";
 	import { invalidate } from '$app/navigation';
 	import { page } from '$app/state';
+	import StrikeZone from "$lib/components/StrikeZone.svelte";
+	import AtBatProfile from "$lib/components/AtBatProfile.svelte";
 
 	let { data } = $props();
 	let intervalId;
@@ -11,7 +13,6 @@
 		if (data.status === 'Live') {
 			intervalId = setInterval(() => {
 				invalidate(`game:${page.params.id}`);
-				console.log("updating...");
 			}, 10000);
 		}
 		return () => clearInterval(intervalId);
@@ -40,8 +41,13 @@
 	</h2>
 </div>
 
-<div class="container">
-	<BattingCount />
+<div class="at-bat container">
+	<AtBatProfile pitching={data.inningState === "Bottom"} atBat={data.atBat} />
+	<div class="ball-strike-container">
+		<StrikeZone playEvents={data.playEvents} />
+		<BattingCount offense={data.offense} />
+	</div>
+	<AtBatProfile pitching={data.inningState === "Top"} atBat={data.atBat} />
 </div>
 
 <table class="periods container">
@@ -129,5 +135,10 @@
 	.game-bug {
 		display: flex;
 		gap: 1rem;
+	}
+
+	.at-bat {
+		display: flex;
+		justify-content: space-around;
 	}
 </style>

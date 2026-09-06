@@ -1,9 +1,5 @@
 <script>
-    const offense = {
-        balls: 0,
-        strikes: 3,
-        outs: 0
-    }
+    let { offense } = $props();
 </script>
 
 
@@ -12,14 +8,14 @@
 <div class="count-container">
     <div class="balls">
         <p>B</p>
-        <div class:is-ball={offense.balls > 0 && offense.balls !== 4} class="ball"></div>
-        <div class:is-ball={offense.balls > 1 && offense.balls !== 4} class="ball"></div>
-        <div class:is-ball={offense.balls > 2 && offense.balls !== 4} class="ball"></div>
+        <div class:is-ball={offense.balls !== null && offense.balls > 0 && offense.balls !== 4} class="ball"></div>
+        <div class:is-ball={offense.balls !== null && offense.balls > 1 && offense.balls !== 4} class="ball"></div>
+        <div class:is-ball={offense.balls !== null && offense.balls > 2 && offense.balls !== 4} class="ball"></div>
     </div>
     <div class="strikes">
         <p>S</p>
-        <div class:is-strike={offense.strikes > 0 && offense.strikes !== 3} class="strike"></div>
-        <div class:is-strike={offense.strikes === 2} class="strike"></div>
+        <div class:is-strike={offense.strikes !== null && offense.strikes > 0 && offense.strikes !== 3} class="strike"></div>
+        <div class:is-strike={offense.strikes !== null && offense.strikes === 2} class="strike"></div>
     </div>
     <div class="outs">
         <p>O</p>

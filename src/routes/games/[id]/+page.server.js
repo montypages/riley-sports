@@ -16,20 +16,53 @@ export async function load({ params, url, fetch, depends }) {
 }
 
 async function loadMlbGameDetail(fetch, gamePk) {
-	const [boxRes, lineRes, scheduleRes] = await Promise.all([
+	const [boxRes, lineRes, scheduleRes, playRes] = await Promise.all([
 		fetch(`https://statsapi.mlb.com/api/v1/game/${gamePk}/boxscore`),
 		fetch(`https://statsapi.mlb.com/api/v1/game/${gamePk}/linescore`),
-		fetch(`https://statsapi.mlb.com/api/v1/schedule?gamePk=${gamePk}`)
+		fetch(`https://statsapi.mlb.com/api/v1/schedule?gamePk=${gamePk}`),
+		fetch(`https://statsapi.mlb.com/api/v1/game/${gamePk}/playByPlay`)
 	]);
 	const box = await boxRes.json();
 	const line = await lineRes.json();
 	const schedule = await scheduleRes.json();
+	const playByPlay = await playRes.json();
 
 	const away = box.teams.away, home = box.teams.home;
 	const inning = `${line.inningState} ${line.currentInningOrdinal}`;
+	const inningState = line.inningState;
 	const offense = line.offense;
 	const game = schedule.dates?.[0]?.games?.[0];
-	const status = game?.status?.abstractGameState; 
+	const status = game?.status?.abstractGameState;
+	const currentPlay = playByPlay.currentPlay;
+	const isTopInning = line.isTopInning; // top = away batting, home pitching
+
+	const battingTeam = isTopInning ? box.teams.away : box.teams.home;
+	const pitchingTeam = isTopInning ? box.teams.home : box.teams.away;
+
+	const batterId = currentPlay?.matchup?.batter?.id;
+	const pitcherId = currentPlay?.matchup?.pitcher?.id;
+
+	const batterData = battingTeam.players[`ID${batterId}`];
+	const pitcherData = pitchingTeam.players[`ID${pitcherId}`];
+
+	const atBat = {
+		batter: {
+			name: currentPlay?.matchup?.batter?.fullName,
+			side: currentPlay?.matchup?.batSide?.code,
+			gameHits: batterData?.stats?.batting?.hits ?? 0,
+			gameAtBats: batterData?.stats?.batting?.atBats ?? 0,
+			seasonAvg: batterData?.seasonStats?.batting?.avg
+		},
+		pitcher: {
+			name: currentPlay?.matchup?.pitcher?.fullName,
+			hand: currentPlay?.matchup?.pitchHand?.code,
+			inningsPitched: pitcherData?.stats?.pitching?.inningsPitched,
+			pitchCount: pitcherData?.stats?.pitching?.numberOfPitches,
+			earnedRuns: pitcherData?.stats?.pitching?.earnedRuns,
+			strikeOuts: pitcherData?.stats?.pitching?.strikeOuts,
+			seasonEra: pitcherData?.seasonStats?.pitching?.era
+		}
+	};
 
 	return {
 		league: 'mlb',
@@ -46,12 +79,18 @@ async function loadMlbGameDetail(fetch, gamePk) {
 			home: extractMlbPlayers(home)
 		},
 		inning: inning,
+		inningState: inningState,
 		offense: {
 			outs: line.outs,
 			first: offense.first,
 			second: offense.second,
-			third: offense.third
-		}
+			third: offense.third,
+			balls: line.balls,
+			strikes: line.strikes
+		},
+		playEvents: currentPlay?.playEvents ?? [],
+		atBatIndex: currentPlay?.about?.atBatIndex,
+		atBat: atBat
 	};
 }
 
