@@ -9,7 +9,7 @@
         <div class:on-base={offense.third != null} class="base" id="third"></div>
     </div>
     <div class="outs">
-        <div class:is-out={offense.outs > 0 && offense.outs !== 3} class="out" id="out1"></div>
+        <div class:is-out={offense.outs === 1 || offense.outs === 2} class="out" id="out1"></div>
         <div class:is-out={offense.outs === 2} class="out" id="out2"></div>
     </div>
 </div>
