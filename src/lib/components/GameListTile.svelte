@@ -1,9 +1,13 @@
 <script>
+	import { page } from '$app/state';
+	import { resolve } from '$app/paths';
 	let { game } = $props();
+
+	const backTo = encodeURIComponent(`/${page.url.search}`);
 </script>
 
 <li class="game" class:live={game.isLive}>
-	<a class="game-link" href={`/games/${game.id}?league=${game.league}`}>
+	<a class="game-link" href={resolve(`/games/${game.id}?league=${game.league}&back=${backTo}`)}>
 		<div class="teams">
 			<div class="away">
 				<p class="team">{game.away.name} <span>({game.away.record})</span></p>

@@ -126,6 +126,8 @@ async function loadNflGameDetail(fetch, eventId) {
 	const competitors = data.header.competitions[0].competitors;
 	const away = competitors.find((c) => c.homeAway === 'away');
 	const home = competitors.find((c) => c.homeAway === 'home');
+	const compStatus = data.header.competitions[0].status;
+	const status = compStatus?.type?.state === 'in' ? 'Live' : compStatus?.type?.description;
 
 	const periods = (away.linescores ?? []).map((ls, i) => ({
 		label: `Q${i + 1}`,
@@ -141,7 +143,8 @@ async function loadNflGameDetail(fetch, eventId) {
 		players: {
 			away: extractNflPlayers(data.boxscore?.players, away.team.id),
 			home: extractNflPlayers(data.boxscore?.players, home.team.id)
-		}
+		},
+		status: status
 	};
 }
 

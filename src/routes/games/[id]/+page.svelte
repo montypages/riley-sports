@@ -5,9 +5,12 @@
 	import { page } from '$app/state';
 	import StrikeZone from "$lib/components/StrikeZone.svelte";
 	import AtBatProfile from "$lib/components/AtBatProfile.svelte";
+	import { resolve } from "$app/paths";
 
 	let { data } = $props();
 	let intervalId;
+
+	const backHref = page.url.searchParams.get('back') ?? '/';
 
 	$effect(() => {
 		if (data.status === 'Live') {
@@ -19,7 +22,7 @@
 	});
 </script>
 
-<a href="/" class="back-link">← Back to games</a>
+<a href={resolve(backHref)} class="back-link">← Back to games</a>
 
 <div class="score-banner container">
 	<h2 class="team">

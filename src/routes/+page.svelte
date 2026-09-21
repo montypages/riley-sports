@@ -7,6 +7,7 @@
 	let { data } = $props();
 
 	function setLeague(newLeague) {
+
 		const params = new URLSearchParams();
 		params.set('league', newLeague);
 		goto(`?${params}`, { keepFocus: true });
