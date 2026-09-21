@@ -22,8 +22,39 @@ This is a sports app I built for my son, Riley so he can keep up with his favori
       | | **Top/Bot Inning** | | |
       | Team | Scoring details | **updated score** | score |
 
-### NFL
-#### Game List
-- List tiles not showing up
-#### Games
-- Create game details for nfl games
+### NFL Games
+- Field possession tracker?
+- Abv. names next to main score
+- Current quarter/game clock between score
+- List of plays with details
+  - Team with pos.
+  - Event (Yardage, rush/pass/etc., penalty, score)
+  - Down and dist, field location, quarter game clock
+  - Description
+  - Updated score (if score)
+- Stats leaders (Away, Home)
+  - Passing
+  - Rushing
+  - Receiving
+- Team stats (Away, Home)
+  - First Downs
+  - Third Down Efficiency
+  - Fourth Down Efficiency
+  - Total Yards
+  - Passing Yards
+  - Rushing Yards
+  - Total Plays
+  - Turnovers
+  - Penalties
+  - Time of Possession
+- Stats table with table headings
+  - Player name = F. Lastname
+  - Name column sticky, stats columns side-scroll
+  - Passing
+  - Rushing
+  - Receiving
+  - Kicking
+  - Punting
+  - Defense
+  - Punt Return
+  - Kick Return
