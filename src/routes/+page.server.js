@@ -6,35 +6,37 @@ const CALENDAR_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
 
 async function getNflCalendar(fetch) {
 	if (calendarCache.weeks && Date.now() - calendarCache.fetchedAt < CALENDAR_TTL_MS) {
-		return calendarCache.weeks;
+		return calendarCache; // now returns { weeks, seasonYear }
 	}
 	const res = await fetch('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard');
+	if (!res.ok) return { weeks: [], seasonYear: null }; // (also fixes the missing res.ok check)
 	const data = await res.json();
 	const weeks = flattenNflCalendar(data.leagues?.[0]?.calendar);
-	calendarCache = { weeks, fetchedAt: Date.now() };
-	return weeks;
+	const seasonYear = data.leagues?.[0]?.season?.year ?? null;
+	calendarCache = { weeks, seasonYear, fetchedAt: Date.now() };
+	return { weeks, seasonYear };
 }
 
 export async function load({ url, fetch }) {
 	const league = url.searchParams.get('league') ?? 'mlb';
 
 	if (league === 'nfl') {
-		const weeks = await getNflCalendar(fetch);
-		const weekParam = url.searchParams.get('week');
-		const idx = findNflWeek(weeks, weekParam);
-		const week = weeks[idx];
+	const { weeks, seasonYear } = await getNflCalendar(fetch);
+	const weekParam = url.searchParams.get('week');
+	const idx = findNflWeek(weeks, weekParam);
+	const week = weeks[idx];
 
-		const games = await loadNflGames(fetch, week.startDate, week.endDate);
+	const games = await loadNflGames(fetch, seasonYear, week.seasonType, week.weekNumber);
 
-		return {
-			league,
-			weekLabel: week.label,
-			weekParam: week.startDate,
-			prevWeekParam: idx > 0 ? weeks[idx - 1].startDate : null,
-			nextWeekParam: idx < weeks.length - 1 ? weeks[idx + 1].startDate : null,
-			games
-		};
-	}
+	return {
+		league,
+		weekLabel: week.label,
+		weekParam: week.startDate,
+		prevWeekParam: idx > 0 ? weeks[idx - 1].startDate : null,
+		nextWeekParam: idx < weeks.length - 1 ? weeks[idx + 1].startDate : null,
+		games
+	};
+}
 
 	const date = url.searchParams.get('date') ?? todayStr();
 	const games = await loadMlbGames(fetch, date);
@@ -51,10 +53,9 @@ async function loadMlbGames(fetch, date) {
 	return sortFavoritesFirst(games.map((g) => ({ id: g.gamePk, ...normalizeMlbGame(g) })));
 }
 
-async function loadNflGames(fetch, startDate, endDate) {
-	const range = `${startDate.replaceAll('-', '')}-${endDate.replaceAll('-', '')}`;
+async function loadNflGames(fetch, year, seasontype, week) {
 	const res = await fetch(
-		`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=${range}`
+		`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=${year}&seasontype=${seasontype}&week=${week}`
 	);
 	if (!res.ok) return [];
 	const data = await res.json();

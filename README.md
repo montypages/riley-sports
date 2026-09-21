@@ -21,3 +21,9 @@ This is a sports app I built for my son, Riley so he can keep up with his favori
       | Team | Scoring details | score | **updated score** |
       | | **Top/Bot Inning** | | |
       | Team | Scoring details | **updated score** | score |
+
+### NFL
+#### Game List
+- List tiles not showing up
+#### Games
+- Create game details for nfl games

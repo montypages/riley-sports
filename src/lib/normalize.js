@@ -85,15 +85,22 @@ export function toPacificDateStr(isoUtc) {
 
 
 
-// Flattens ESPN's calendar (grouped by season type) into one chronological list
+// Flattens ESPN's calendar (grouped by season type) into one chronological list.
+// Each entry keeps startDate/endDate (for display + URL week navigation) plus
+// seasonType and weekNumber (ESPN's own `value` fields), which is what the
+// scoreboard?dates=<year>&seasontype=<n>&week=<n> query needs — the
+// dates=START-END range form stopped working (ESPN regression, 2026-09-15+).
 export function flattenNflCalendar(calendar) {
 	const weeks = [];
 	for (const group of calendar ?? []) {
+		const seasonType = Number(group.value);
 		for (const entry of group.entries ?? []) {
 			weeks.push({
 				label: entry.label, // e.g. "Preseason Week 2", "Wild Card"
 				startDate: toPacificDateStr(entry.startDate),
-				endDate: toPacificDateStr(entry.endDate)
+				endDate: toPacificDateStr(entry.endDate),
+				seasonType, // 1 = preseason, 2 = regular season, 3 = postseason
+				weekNumber: Number(entry.value)
 			});
 		}
 	}

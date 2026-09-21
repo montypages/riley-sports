@@ -41,14 +41,16 @@
 	</h2>
 </div>
 
-<div class="at-bat container">
-	<AtBatProfile pitching={data.inningState === "Bottom"} atBat={data.atBat} />
-	<div class="ball-strike-container">
-		<StrikeZone playEvents={data.playEvents} />
-		<BattingCount offense={data.offense} />
+{#if data.league === 'mlb'}
+	<div class="at-bat container">
+		<AtBatProfile pitching={data.inningState === "Bottom"} atBat={data.atBat} />
+		<div class="ball-strike-container">
+			<StrikeZone playEvents={data.playEvents} />
+			<BattingCount offense={data.offense} />
+		</div>
+		<AtBatProfile pitching={data.inningState === "Top"} atBat={data.atBat} />
 	</div>
-	<AtBatProfile pitching={data.inningState === "Top"} atBat={data.atBat} />
-</div>
+{/if}
 
 <table class="periods container">
 	<thead>
