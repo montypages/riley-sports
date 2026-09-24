@@ -129,8 +129,10 @@ async function loadNflGameDetail(fetch, eventId) {
 	const competitors = data.header.competitions[0].competitors;
 	const away = competitors.find((c) => c.homeAway === 'away');
 	const home = competitors.find((c) => c.homeAway === 'home');
-	const leaders = data.header.leaders;
-	const passingLeaders = leaders.find((c) => c.name === 'passingYards');
+	const leaders = data.leaders;
+	const passingLeaders = leaders[0];
+	const rushingLeaders = leaders[1];
+	const recievingLeaders = leaders[2];
 	const compStatus = data.header.competitions[0].status;
 	const status = compStatus?.type?.state === 'in' ? 'Live' : compStatus?.type?.description;
 
@@ -151,7 +153,9 @@ async function loadNflGameDetail(fetch, eventId) {
 		},
 		status: status,
 		compStatus: compStatus,
-		passingLeaders: passingLeaders
+		passingLeaders: passingLeaders,
+		rushingLeaders: rushingLeaders,
+		recievingLeaders: recievingLeaders
 	};
 }
 
