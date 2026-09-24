@@ -1,4 +1,7 @@
 import { error } from '@sveltejs/kit';
+import sampleGame from '$lib/sampleGame.json';
+
+const USE_SAMPLE_DATA = false;
 
 export async function load({ params, url, fetch, depends }) {
 	const league = url.searchParams.get('league');
@@ -122,7 +125,7 @@ async function loadNflGameDetail(fetch, eventId) {
 	const res = await fetch(
 		`https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${eventId}`
 	);
-	const data = await res.json();
+	const data = USE_SAMPLE_DATA ? sampleGame : await res.json();
 	const competitors = data.header.competitions[0].competitors;
 	const away = competitors.find((c) => c.homeAway === 'away');
 	const home = competitors.find((c) => c.homeAway === 'home');

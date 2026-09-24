@@ -1,0 +1,472 @@
+{
+  "header": {
+    "id": "401872999",
+    "season": { "year": 2026, "type": 2 },
+    "week": 2,
+    "competitions": [
+      {
+        "id": "401872999",
+        "status": {
+          "clock": 247.0,
+          "displayClock": "4:07",
+          "period": 3,
+          "type": {
+            "id": "2",
+            "name": "STATUS_IN_PROGRESS",
+            "state": "in",
+            "completed": false,
+            "description": "In Progress",
+            "detail": "3rd Quarter",
+            "shortDetail": "3rd Qtr"
+          }
+        },
+        "competitors": [
+          {
+            "id": "12",
+            "homeAway": "home",
+            "winner": false,
+            "team": {
+              "id": "12",
+              "location": "Kansas City",
+              "name": "Chiefs",
+              "abbreviation": "KC",
+              "displayName": "Kansas City Chiefs",
+              "color": "e31837"
+            },
+            "score": "17",
+            "linescores": [
+              { "value": 7 },
+              { "value": 3 },
+              { "value": 7 },
+              { "value": 0 }
+            ],
+            "records": [{ "name": "overall", "type": "total", "summary": "1-1" }]
+          },
+          {
+            "id": "2",
+            "homeAway": "away",
+            "winner": false,
+            "team": {
+              "id": "2",
+              "location": "Buffalo",
+              "name": "Bills",
+              "abbreviation": "BUF",
+              "displayName": "Buffalo Bills",
+              "color": "00338d"
+            },
+            "score": "20",
+            "linescores": [
+              { "value": 0 },
+              { "value": 14 },
+              { "value": 6 },
+              { "value": 0 }
+            ],
+            "records": [{ "name": "overall", "type": "total", "summary": "2-0" }]
+          }
+        ]
+      }
+    ]
+  },
+
+  "leaders": [
+    {
+      "name": "passingYards",
+      "displayName": "Passing Leader",
+      "leaders": [
+        {
+          "displayValue": "22/31, 261 YDS, 2 TD",
+          "value": 261.0,
+          "athlete": {
+            "id": "3139477",
+            "fullName": "Patrick Mahomes",
+            "shortName": "P. Mahomes",
+            "jersey": "15",
+            "position": { "abbreviation": "QB" },
+            "team": { "id": "12" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "rushingYards",
+      "displayName": "Rushing Leader",
+      "leaders": [
+        {
+          "displayValue": "14 CAR, 63 YDS, 1 TD",
+          "value": 63.0,
+          "athlete": {
+            "id": "4258173",
+            "fullName": "Isiah Pacheco",
+            "shortName": "I. Pacheco",
+            "jersey": "10",
+            "position": { "abbreviation": "RB" },
+            "team": { "id": "12" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "receivingYards",
+      "displayName": "Receiving Leader",
+      "leaders": [
+        {
+          "displayValue": "7 REC, 104 YDS, 1 TD",
+          "value": 104.0,
+          "athlete": {
+            "id": "4262921",
+            "fullName": "Khalil Shakir",
+            "shortName": "K. Shakir",
+            "jersey": "10",
+            "position": { "abbreviation": "WR" },
+            "team": { "id": "2" }
+          }
+        }
+      ]
+    }
+  ],
+
+  "drives": {
+    "previous": [
+      {
+        "team": { "id": "2", "abbreviation": "BUF" },
+        "description": "8 plays, 71 yards, 3:42",
+        "result": "TD",
+        "plays": [
+          {
+            "id": "4018729901",
+            "sequenceNumber": "180",
+            "type": { "text": "Rush" },
+            "text": "J.Cook III up the middle for 6 yards to the KC 41.",
+            "awayScore": 20,
+            "homeScore": 17,
+            "period": { "number": 3 },
+            "clock": { "displayValue": "9:12" },
+            "scoringPlay": false,
+            "start": {
+              "down": 1,
+              "distance": 10,
+              "yardLine": 65,
+              "yardsToEndzone": 35,
+              "possessionText": "BUF 35",
+              "downDistanceText": "1st & 10 at BUF 35"
+            }
+          },
+          {
+            "id": "4018729905",
+            "sequenceNumber": "184",
+            "type": { "text": "Passing Touchdown" },
+            "text": "J.Allen pass short right to K.Shakir for 12 yards, TOUCHDOWN.",
+            "awayScore": 20,
+            "homeScore": 17,
+            "period": { "number": 3 },
+            "clock": { "displayValue": "5:30" },
+            "scoringPlay": true,
+            "scoreValue": 6,
+            "start": {
+              "down": 2,
+              "distance": 12,
+              "yardLine": 12,
+              "yardsToEndzone": 12,
+              "possessionText": "KC 12",
+              "downDistanceText": "2nd & 12 at KC 12"
+            }
+          }
+        ]
+      }
+    ],
+    "current": {
+      "team": { "id": "12", "abbreviation": "KC" },
+      "description": "In progress",
+      "plays": [
+        {
+          "id": "4018729911",
+          "sequenceNumber": "191",
+          "type": { "text": "Rush" },
+          "text": "I.Pacheco left tackle for 4 yards to the KC 29.",
+          "awayScore": 20,
+          "homeScore": 17,
+          "period": { "number": 3 },
+          "clock": { "displayValue": "4:41" },
+          "scoringPlay": false,
+          "start": {
+            "down": 1,
+            "distance": 10,
+            "yardLine": 25,
+            "yardsToEndzone": 75,
+            "possessionText": "KC 25",
+            "downDistanceText": "1st & 10 at KC 25"
+          }
+        },
+        {
+          "id": "4018729913",
+          "sequenceNumber": "193",
+          "type": { "text": "Pass Incompletion" },
+          "text": "P.Mahomes pass incomplete short middle to T.Kelce.",
+          "awayScore": 20,
+          "homeScore": 17,
+          "period": { "number": 3 },
+          "clock": { "displayValue": "4:18" },
+          "scoringPlay": false,
+          "start": {
+            "down": 2,
+            "distance": 6,
+            "yardLine": 29,
+            "yardsToEndzone": 71,
+            "possessionText": "KC 29",
+            "downDistanceText": "2nd & 6 at KC 29"
+          }
+        },
+        {
+          "id": "4018729915",
+          "sequenceNumber": "195",
+          "type": { "text": "Penalty" },
+          "text": "PENALTY on BUF-G.Rousseau, Roughing the Passer, 15 yards, enforced at KC 29.",
+          "awayScore": 20,
+          "homeScore": 17,
+          "period": { "number": 3 },
+          "clock": { "displayValue": "4:07" },
+          "scoringPlay": false,
+          "start": {
+            "down": 3,
+            "distance": 6,
+            "yardLine": 29,
+            "yardsToEndzone": 71,
+            "possessionText": "KC 29",
+            "downDistanceText": "3rd & 6 at KC 29"
+          }
+        }
+      ]
+    }
+  },
+
+  "boxscore": {
+    "teams": [
+      {
+        "team": { "id": "2", "abbreviation": "BUF" },
+        "statistics": [
+          { "name": "firstDowns", "displayValue": "14", "label": "1st Downs" },
+          { "name": "thirdDownEff", "displayValue": "5-11", "label": "3rd Down Efficiency" },
+          { "name": "fourthDownEff", "displayValue": "0-0", "label": "4th Down Efficiency" },
+          { "name": "totalYards", "displayValue": "312", "label": "Total Yards" },
+          { "name": "netPassingYards", "displayValue": "218", "label": "Passing Yards" },
+          { "name": "rushingYards", "displayValue": "94", "label": "Rushing Yards" },
+          { "name": "totalPlays", "displayValue": "48", "label": "Total Plays" },
+          { "name": "turnovers", "displayValue": "0", "label": "Turnovers" },
+          { "name": "totalPenaltiesYards", "displayValue": "4-35", "label": "Penalties" },
+          { "name": "possessionTime", "displayValue": "16:22", "label": "Time of Possession" }
+        ]
+      },
+      {
+        "team": { "id": "12", "abbreviation": "KC" },
+        "statistics": [
+          { "name": "firstDowns", "displayValue": "17", "label": "1st Downs" },
+          { "name": "thirdDownEff", "displayValue": "6-13", "label": "3rd Down Efficiency" },
+          { "name": "fourthDownEff", "displayValue": "1-1", "label": "4th Down Efficiency" },
+          { "name": "totalYards", "displayValue": "340", "label": "Total Yards" },
+          { "name": "netPassingYards", "displayValue": "261", "label": "Passing Yards" },
+          { "name": "rushingYards", "displayValue": "79", "label": "Rushing Yards" },
+          { "name": "totalPlays", "displayValue": "52", "label": "Total Plays" },
+          { "name": "turnovers", "displayValue": "1", "label": "Turnovers" },
+          { "name": "totalPenaltiesYards", "displayValue": "2-15", "label": "Penalties" },
+          { "name": "possessionTime", "displayValue": "17:53", "label": "Time of Possession" }
+        ]
+      }
+    ],
+    "players": [
+      {
+        "team": { "id": "2", "abbreviation": "BUF" },
+        "statistics": [
+          {
+            "name": "passing",
+            "labels": ["C/ATT", "YDS", "AVG", "TD", "INT", "SACKS", "QBR", "RTG"],
+            "athletes": [
+              {
+                "athlete": { "id": "3918298", "displayName": "Josh Allen", "shortName": "J. Allen" },
+                "stats": ["20/29", "218", "7.5", "2", "0", "1-7", "78.4", "112.3"]
+              }
+            ]
+          },
+          {
+            "name": "rushing",
+            "labels": ["CAR", "YDS", "AVG", "TD", "LONG"],
+            "athletes": [
+              {
+                "athlete": { "id": "4379399", "displayName": "James Cook III", "shortName": "J. Cook III" },
+                "stats": ["13", "57", "4.4", "0", "11"]
+              },
+              {
+                "athlete": { "id": "3918298", "displayName": "Josh Allen", "shortName": "J. Allen" },
+                "stats": ["6", "37", "6.2", "1", "14"]
+              }
+            ]
+          },
+          {
+            "name": "receiving",
+            "labels": ["REC", "YDS", "AVG", "TD", "LONG", "TGTS"],
+            "athletes": [
+              {
+                "athlete": { "id": "4262921", "displayName": "Khalil Shakir", "shortName": "K. Shakir" },
+                "stats": ["7", "104", "14.9", "1", "31", "9"]
+              },
+              {
+                "athlete": { "id": "4385690", "displayName": "Dalton Kincaid", "shortName": "D. Kincaid" },
+                "stats": ["6", "61", "10.2", "0", "18", "8"]
+              }
+            ]
+          },
+          {
+            "name": "kicking",
+            "labels": ["FG", "PCT", "LONG", "XP", "PTS"],
+            "athletes": [
+              {
+                "athlete": { "id": "3051908", "displayName": "Tyler Bass", "shortName": "T. Bass" },
+                "stats": ["1/1", "100.0", "42", "2/2", "5"]
+              }
+            ]
+          },
+          {
+            "name": "punting",
+            "labels": ["NO", "YDS", "AVG", "TB", "IN20", "LONG"],
+            "athletes": [
+              {
+                "athlete": { "id": "4361634", "displayName": "Sam Martin", "shortName": "S. Martin" },
+                "stats": ["3", "138", "46.0", "0", "1", "51"]
+              }
+            ]
+          },
+          {
+            "name": "defensive",
+            "labels": ["TOT", "SOLO", "SACKS", "TFL", "PD", "QB HTS"],
+            "athletes": [
+              {
+                "athlete": { "id": "4038441", "displayName": "Terrel Bernard", "shortName": "T. Bernard" },
+                "stats": ["8", "6", "0", "1", "0", "0"]
+              },
+              {
+                "athlete": { "id": "4360939", "displayName": "Greg Rousseau", "shortName": "G. Rousseau" },
+                "stats": ["3", "2", "1", "1", "0", "2"]
+              }
+            ]
+          },
+          {
+            "name": "puntReturns",
+            "labels": ["NO", "YDS", "AVG", "LONG", "TD"],
+            "athletes": [
+              {
+                "athlete": { "id": "4426365", "displayName": "Marquez Valdes-Scantling", "shortName": "M. Valdes-Scantling" },
+                "stats": ["2", "14", "7.0", "9", "0"]
+              }
+            ]
+          },
+          {
+            "name": "kickReturns",
+            "labels": ["NO", "YDS", "AVG", "LONG", "TD"],
+            "athletes": [
+              {
+                "athlete": { "id": "4362628", "displayName": "Ty Johnson", "shortName": "T. Johnson" },
+                "stats": ["2", "51", "25.5", "29", "0"]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "team": { "id": "12", "abbreviation": "KC" },
+        "statistics": [
+          {
+            "name": "passing",
+            "labels": ["C/ATT", "YDS", "AVG", "TD", "INT", "SACKS", "QBR", "RTG"],
+            "athletes": [
+              {
+                "athlete": { "id": "3139477", "displayName": "Patrick Mahomes", "shortName": "P. Mahomes" },
+                "stats": ["22/31", "261", "8.4", "2", "1", "2-11", "71.2", "104.6"]
+              }
+            ]
+          },
+          {
+            "name": "rushing",
+            "labels": ["CAR", "YDS", "AVG", "TD", "LONG"],
+            "athletes": [
+              {
+                "athlete": { "id": "4258173", "displayName": "Isiah Pacheco", "shortName": "I. Pacheco" },
+                "stats": ["14", "63", "4.5", "1", "19"]
+              },
+              {
+                "athlete": { "id": "3139477", "displayName": "Patrick Mahomes", "shortName": "P. Mahomes" },
+                "stats": ["4", "16", "4.0", "0", "8"]
+              }
+            ]
+          },
+          {
+            "name": "receiving",
+            "labels": ["REC", "YDS", "AVG", "TD", "LONG", "TGTS"],
+            "athletes": [
+              {
+                "athlete": { "id": "4256189", "displayName": "Travis Kelce", "shortName": "T. Kelce" },
+                "stats": ["8", "89", "11.1", "1", "24", "10"]
+              },
+              {
+                "athlete": { "id": "4241389", "displayName": "Xavier Worthy", "shortName": "X. Worthy" },
+                "stats": ["5", "97", "19.4", "1", "38", "7"]
+              }
+            ]
+          },
+          {
+            "name": "kicking",
+            "labels": ["FG", "PCT", "LONG", "XP", "PTS"],
+            "athletes": [
+              {
+                "athlete": { "id": "3696544", "displayName": "Harrison Butker", "shortName": "H. Butker" },
+                "stats": ["1/2", "50.0", "48", "2/2", "5"]
+              }
+            ]
+          },
+          {
+            "name": "punting",
+            "labels": ["NO", "YDS", "AVG", "TB", "IN20", "LONG"],
+            "athletes": [
+              {
+                "athlete": { "id": "3051909", "displayName": "Matt Araiza", "shortName": "M. Araiza" },
+                "stats": ["2", "94", "47.0", "1", "1", "52"]
+              }
+            ]
+          },
+          {
+            "name": "defensive",
+            "labels": ["TOT", "SOLO", "SACKS", "TFL", "PD", "QB HTS"],
+            "athletes": [
+              {
+                "athlete": { "id": "4569173", "displayName": "Nick Bolton", "shortName": "N. Bolton" },
+                "stats": ["9", "7", "0", "1", "1", "0"]
+              },
+              {
+                "athlete": { "id": "4241463", "displayName": "George Karlaftis", "shortName": "G. Karlaftis" },
+                "stats": ["4", "3", "1", "2", "0", "3"]
+              }
+            ]
+          },
+          {
+            "name": "puntReturns",
+            "labels": ["NO", "YDS", "AVG", "LONG", "TD"],
+            "athletes": [
+              {
+                "athlete": { "id": "4360939", "displayName": "Skyy Moore", "shortName": "S. Moore" },
+                "stats": ["1", "8", "8.0", "8", "0"]
+              }
+            ]
+          },
+          {
+            "name": "kickReturns",
+            "labels": ["NO", "YDS", "AVG", "LONG", "TD"],
+            "athletes": [
+              {
+                "athlete": { "id": "4362321", "displayName": "Nikko Remigio", "shortName": "N. Remigio" },
+                "stats": ["1", "23", "23.0", "23", "0"]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
