@@ -24,8 +24,6 @@ This is a sports app I built for my son, Riley so he can keep up with his favori
 
 ### NFL Games
 - Field possession tracker?
-- Abv. names next to main score
-- Current quarter/game clock between score
 - List of plays with details
   - Team with pos.
   - Event (Yardage, rush/pass/etc., penalty, score)

@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import sampleGame from '$lib/sampleGame.json';
 
-const USE_SAMPLE_DATA = false;
+const USE_SAMPLE_DATA = true;
 
 export async function load({ params, url, fetch, depends }) {
 	const league = url.searchParams.get('league');
@@ -129,6 +129,8 @@ async function loadNflGameDetail(fetch, eventId) {
 	const competitors = data.header.competitions[0].competitors;
 	const away = competitors.find((c) => c.homeAway === 'away');
 	const home = competitors.find((c) => c.homeAway === 'home');
+	const leaders = data.header.leaders;
+	const passingLeaders = leaders.find((c) => c.name === 'passingYards');
 	const compStatus = data.header.competitions[0].status;
 	const status = compStatus?.type?.state === 'in' ? 'Live' : compStatus?.type?.description;
 
@@ -140,14 +142,16 @@ async function loadNflGameDetail(fetch, eventId) {
 
 	return {
 		league: 'nfl',
-		away: { name: away.team.displayName, score: away.score },
-		home: { name: home.team.displayName, score: home.score },
+		away: { name: away.team.displayName, abbreviation: away.team.abbreviation, score: away.score },
+		home: { name: home.team.displayName, abbreviation: home.team.abbreviation, score: home.score },
 		periods,
 		players: {
 			away: extractNflPlayers(data.boxscore?.players, away.team.id),
 			home: extractNflPlayers(data.boxscore?.players, home.team.id)
 		},
-		status: status
+		status: status,
+		compStatus: compStatus,
+		passingLeaders: passingLeaders
 	};
 }
 

@@ -6,6 +6,7 @@
 	import StrikeZone from "$lib/components/StrikeZone.svelte";
 	import AtBatProfile from "$lib/components/AtBatProfile.svelte";
 	import { resolve } from "$app/paths";
+	import StatsLeaders from "$lib/components/StatsLeaders.svelte";
 
 	let { data } = $props();
 	let intervalId;
@@ -37,6 +38,11 @@
 		{:else}
 			<h3 class="center-text">{data.status}</h3>
 		{/if}
+	{:else}
+			<div class="flex-center">
+				<h3 class="center-text no-margin">{data.compStatus.type.shortDetail}</h3>
+				<h3 class="center-text no-margin">{data.compStatus.displayClock}</h3>
+			</div>
 	{/if}
 	<h2 class="team">
 		<span class="score">{data.home.score}</span>
@@ -64,6 +70,10 @@
 		<tr><td>{data.home.name}</td>{#each data.periods as p}<td>{p.home}</td>{/each}</tr>
 	</tbody>
 </table>
+
+{#if data.league === 'nfl'}
+	<StatsLeaders stats={data} />
+{/if}
 
 {#if data.league === 'mlb'}
 	{#each [['away', data.away.name], ['home', data.home.name]] as [side, name]}
@@ -145,5 +155,15 @@
 	.at-bat {
 		display: flex;
 		justify-content: space-around;
+	}
+
+	.no-margin {
+		margin: 0;
+	}
+
+	.flex-center {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 </style>
