@@ -1,5 +1,12 @@
 <script>
     let { stats } = $props();
+
+    const homePassingLeader = stats.homeLeaders.find(leader => leader.name === 'passingYards')
+    const awayPassingLeader = stats.awayLeaders.find(leader => leader.name === 'passingYards')
+    const homeRushingLeader = stats.homeLeaders.find(leader => leader.name === 'rushingYards')
+    const awayRushingLeader = stats.awayLeaders.find(leader => leader.name === 'rushingYards')
+    const homeRecievingLeader = stats.homeLeaders.find(leader => leader.name === 'receivingYards')
+    const awayRecievingLeader = stats.awayLeaders.find(leader => leader.name === 'receivingYards')
 </script>
 
 <section id="stats-leaders">
@@ -12,39 +19,39 @@
             <!-- Passing -->
             <h4 class="two-col">Passing</h4>
             <div class="stat-box">
-                <h5>{stats.passingLeaders.leaders[1]?.athlete.shortName}</h5>
-                <p class="bold">{stats.passingLeaders.leaders[1]?.value} YDS</p>
-                <p class="small">{stats.passingLeaders.leaders[1]?.displayValue}</p>
+                <h5>{awayPassingLeader.leaders[0]?.athlete.shortName}</h5>
+                <p class="bold">{awayPassingLeader.leaders[0]?.value} YDS</p>
+                <p class="small">{awayPassingLeader.leaders[0]?.displayValue}</p>
             </div>
             <div class="stat-box">
-                <h5>{stats.passingLeaders.leaders[0]?.athlete.shortName}</h5>
-                <p class="bold">{stats.passingLeaders.leaders[0]?.value} YDS</p>
-                <p class="small">{stats.passingLeaders.leaders[0]?.displayValue}</p>
+                <h5>{homePassingLeader.leaders[0]?.athlete.shortName}</h5>
+                <p class="bold">{homePassingLeader.leaders[0]?.value} YDS</p>
+                <p class="small">{homePassingLeader.leaders[0]?.displayValue}</p>
             </div>
             <!-- Rushing -->
             <h4 class="two-col">Rushing</h4>
             <div class="stat-box">
-                <h5>{stats.rushingLeaders.leaders[1]?.athlete.shortName}</h5>
-                <p class="bold">{stats.rushingLeaders.leaders[1]?.value} YDS</p>
-                <p class="small">{stats.rushingLeaders.leaders[1]?.displayValue}</p>
+                <h5>{awayRushingLeader.leaders[0]?.athlete.shortName}</h5>
+                <p class="bold">{awayRushingLeader.leaders[0]?.value} YDS</p>
+                <p class="small">{awayRushingLeader.leaders[0]?.displayValue}</p>
             </div>
             <div class="stat-box">
-                <h5>{stats.rushingLeaders.leaders[0]?.athlete.shortName}</h5>
-                <p class="bold">{stats.rushingLeaders.leaders[0]?.value} YDS</p>
-                <p class="small">{stats.rushingLeaders.leaders[0]?.displayValue}</p>
+                <h5>{homeRushingLeader.leaders[0]?.athlete.shortName}</h5>
+                <p class="bold">{homeRushingLeader.leaders[0]?.value} YDS</p>
+                <p class="small">{homeRushingLeader.leaders[0]?.displayValue}</p>
             </div>
             
             <!-- Receiving -->
             <h4 class="two-col">Recieving</h4>
             <div class="stat-box">
-                <h5>{stats.recievingLeaders.leaders[1]?.athlete.shortName}</h5>
-                <p class="bold">{stats.recievingLeaders.leaders[1]?.value} YDS</p>
-                <p class="small">{stats.recievingLeaders.leaders[1]?.displayValue}</p>
+                <h5>{awayRecievingLeader.leaders[0]?.athlete.shortName}</h5>
+                <p class="bold">{awayRecievingLeader.leaders[0]?.value} YDS</p>
+                <p class="small">{awayRecievingLeader.leaders[0]?.displayValue}</p>
             </div>
             <div class="stat-box">
-                <h5>{stats.recievingLeaders.leaders[0]?.athlete.shortName}</h5>
-                <p class="bold">{stats.recievingLeaders.leaders[0]?.value} YDS</p>
-                <p class="small">{stats.recievingLeaders.leaders[0]?.displayValue}</p>
+                <h5>{homeRecievingLeader.leaders[0]?.athlete.shortName}</h5>
+                <p class="bold">{homeRecievingLeader.leaders[0]?.value} YDS</p>
+                <p class="small">{homeRecievingLeader.leaders[0]?.displayValue}</p>
             </div>
         </div>
     </div>
@@ -55,10 +62,12 @@
     .stats-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
+        gap: 2px;
     }
 
     .two-col {
         grid-column: span 2;
+        background-color: #333;
     }
 
     .bold {
@@ -67,6 +76,26 @@
 
     .small {
         font-size: 0.75rem;
+    }
+
+    .stat-box {
+        border-left: 1px solid #444;
+        padding: 0 0 0 0.5em;
+    }
+
+    .stat-box > * {
+        margin: 0;
+    }
+
+    #stats-leaders {
+        background-color: #222;
+        padding: 1rem 0;
+        margin: 1rem 0;
+    }
+
+    h2 {
+        margin: 0;
+        background-color: #333;
     }
 
 </style>

@@ -30,10 +30,10 @@ This is a sports app I built for my son, Riley so he can keep up with his favori
   - Down and dist, field location, quarter game clock
   - Description
   - Updated score (if score)
-- Stats leaders (Away, Home)
-  - Passing
-  - Rushing
-  - Receiving
+- ~~Stats leaders (Away, Home)~~
+  - ~~Passing~~
+  - ~~Rushing~~
+  - ~~Receiving~~
 - Team stats (Away, Home)
   - First Downs
   - Third Down Efficiency

@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import sampleGame from '$lib/sampleGame.json';
 
-const USE_SAMPLE_DATA = true;
+const USE_SAMPLE_DATA = false;
 
 export async function load({ params, url, fetch, depends }) {
 	const league = url.searchParams.get('league');
@@ -130,9 +130,8 @@ async function loadNflGameDetail(fetch, eventId) {
 	const away = competitors.find((c) => c.homeAway === 'away');
 	const home = competitors.find((c) => c.homeAway === 'home');
 	const leaders = data.leaders;
-	const passingLeaders = leaders[0];
-	const rushingLeaders = leaders[1];
-	const recievingLeaders = leaders[2];
+	const homeLeaders = leaders[0].leaders;
+	const awayLeaders = leaders[1].leaders;
 	const compStatus = data.header.competitions[0].status;
 	const status = compStatus?.type?.state === 'in' ? 'Live' : compStatus?.type?.description;
 
@@ -153,9 +152,8 @@ async function loadNflGameDetail(fetch, eventId) {
 		},
 		status: status,
 		compStatus: compStatus,
-		passingLeaders: passingLeaders,
-		rushingLeaders: rushingLeaders,
-		recievingLeaders: recievingLeaders
+		homeLeaders: homeLeaders,
+		awayLeaders: awayLeaders
 	};
 }
 
