@@ -23,13 +23,13 @@ This is a sports app I built for my son, Riley so he can keep up with his favori
       | Team | Scoring details | **updated score** | score |
 
 ### NFL Games
-- Field possession tracker?
-- List of plays with details
-  - Team with pos.
-  - Event (Yardage, rush/pass/etc., penalty, score)
-  - Down and dist, field location, quarter game clock
-  - Description
-  - Updated score (if score)
+- ~~Field possession tracker?~~
+- ~~List of plays with details~~
+  - ~~Team with pos.~~
+  - ~~Event (Yardage, rush/pass/etc., penalty, score)~~
+  - ~~Down and dist, field location, quarter game clock~~
+  - ~~Description~~
+  - ~~Updated score (if score)~~
 - ~~Stats leaders (Away, Home)~~
   - ~~Passing~~
   - ~~Rushing~~

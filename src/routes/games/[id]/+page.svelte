@@ -7,6 +7,8 @@
 	import AtBatProfile from "$lib/components/AtBatProfile.svelte";
 	import { resolve } from "$app/paths";
 	import StatsLeaders from "$lib/components/StatsLeaders.svelte";
+	import FieldPossessionTracker from "$lib/components/FieldPossessionTracker.svelte";
+	import PlayByPlay from "$lib/components/PlayByPlay.svelte";
 
 	let { data } = $props();
 	let intervalId;
@@ -41,7 +43,6 @@
 	{:else}
 			<div class="flex-center">
 				<h3 class="center-text no-margin">{data.compStatus.type.shortDetail}</h3>
-				<h3 class="center-text no-margin">{data.compStatus.displayClock}</h3>
 			</div>
 	{/if}
 	<h2 class="team">
@@ -70,6 +71,14 @@
 		<tr><td>{data.home.name}</td>{#each data.periods as p}<td>{p.home}</td>{/each}</tr>
 	</tbody>
 </table>
+
+{#if data.league === 'nfl' && data.currentPlay}
+	<FieldPossessionTracker homeTeam={data.home} awayTeam={data.away} play={data.currentPlay} />
+{/if}
+
+{#if data.league === 'nfl' && data.drives?.length}
+	<PlayByPlay drives={data.drives} homeTeam={data.home} awayTeam={data.away} />
+{/if}
 
 {#if data.league === 'nfl'}
 	<StatsLeaders stats={data} />

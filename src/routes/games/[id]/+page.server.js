@@ -30,7 +30,8 @@ async function loadMlbGameDetail(fetch, gamePk) {
 	const schedule = await scheduleRes.json();
 	const playByPlay = await playRes.json();
 
-	const away = box.teams.away, home = box.teams.home;
+	const away = box.teams.away,
+		home = box.teams.home;
 	const inning = `${line.inningState} ${line.currentInningOrdinal}`;
 	const inningState = line.inningState;
 	const offense = line.offense;
@@ -70,8 +71,16 @@ async function loadMlbGameDetail(fetch, gamePk) {
 	return {
 		league: 'mlb',
 		status: status,
-		away: { name: away.team.name, abbreviation: away.team.abbreviation, score: line.teams?.away?.runs ?? 0 },
-		home: { name: home.team.name, abbreviation: home.team.abbreviation, score: line.teams?.home?.runs ?? 0 },
+		away: {
+			name: away.team.name,
+			abbreviation: away.team.abbreviation,
+			score: line.teams?.away?.runs ?? 0
+		},
+		home: {
+			name: home.team.name,
+			abbreviation: home.team.abbreviation,
+			score: line.teams?.home?.runs ?? 0
+		},
 		periods: line.innings.map((inn) => ({
 			label: inn.ordinalNum,
 			away: inn.away?.runs ?? '-',
@@ -134,6 +143,10 @@ async function loadNflGameDetail(fetch, eventId) {
 	const awayLeaders = leaders[1].leaders;
 	const compStatus = data.header.competitions[0].status;
 	const status = compStatus?.type?.state === 'in' ? 'Live' : compStatus?.type?.description;
+	const currentDrivePlays = data.drives?.current?.plays ?? [];
+	const lastPreviousDrivePlays = data.drives?.previous?.at(-1)?.plays ?? [];
+	const lastPlay = currentDrivePlays.at(-1) ?? lastPreviousDrivePlays.at(-1) ?? null;
+	const currentPlay = lastPlay?.start ?? null;
 
 	const periods = (away.linescores ?? []).map((ls, i) => ({
 		label: `Q${i + 1}`,
@@ -141,10 +154,35 @@ async function loadNflGameDetail(fetch, eventId) {
 		home: home.linescores?.[i]?.displayValue ?? '-'
 	}));
 
+	function getNflDrives(drives) {
+		const previous = drives?.previous ?? [];
+		const current = drives?.current;
+		const all = current?.plays?.length ? [...previous, current] : previous;
+
+		const seen = new Set();
+		return all.filter((drive) => {
+			if (seen.has(drive.id)) return false;
+			seen.add(drive.id);
+			return true;
+		});
+	}
+
 	return {
 		league: 'nfl',
-		away: { name: away.team.displayName, abbreviation: away.team.abbreviation, score: away.score },
-		home: { name: home.team.displayName, abbreviation: home.team.abbreviation, score: home.score },
+		away: {
+			id: away.team.id,
+			name: away.team.displayName,
+			abbreviation: away.team.abbreviation,
+			color: away.team.color,
+			score: away.score
+		},
+		home: {
+			id: home.team.id,
+			name: home.team.displayName,
+			abbreviation: home.team.abbreviation,
+			color: home.team.color,
+			score: home.score
+		},
 		periods,
 		players: {
 			away: extractNflPlayers(data.boxscore?.players, away.team.id),
@@ -153,7 +191,9 @@ async function loadNflGameDetail(fetch, eventId) {
 		status: status,
 		compStatus: compStatus,
 		homeLeaders: homeLeaders,
-		awayLeaders: awayLeaders
+		awayLeaders: awayLeaders,
+		currentPlay: currentPlay,
+		drives: getNflDrives(data.drives)
 	};
 }
 
