@@ -9,6 +9,8 @@
 	import StatsLeaders from "$lib/components/StatsLeaders.svelte";
 	import FieldPossessionTracker from "$lib/components/FieldPossessionTracker.svelte";
 	import PlayByPlay from "$lib/components/PlayByPlay.svelte";
+	import PlayerStatsTable from "$lib/components/PlayerStatsTable.svelte";
+	import TeamStatsTable from "$lib/components/TeamStatsTable.svelte";
 
 	let { data } = $props();
 	let intervalId;
@@ -82,6 +84,10 @@
 
 {#if data.league === 'nfl'}
 	<StatsLeaders stats={data} />
+	<section class="container">
+		<h3>Team Stats</h3>
+		<TeamStatsTable stats={data.teamStats} awayAbbr={data.away.abbreviation} homeAbbr={data.home.abbreviation} />
+	</section>
 {/if}
 
 {#if data.league === 'mlb'}
@@ -110,13 +116,7 @@
 	{#each [['away', data.away.name], ['home', data.home.name]] as [side, name]}
 		<section class="container">
 			<h3>{name}</h3>
-			<table class="players">
-				<tbody>
-					{#each data.players[side] as p}
-						<tr><td>{p.name}</td><td>{p.role}</td><td>{p.summary}</td></tr>
-					{/each}
-				</tbody>
-			</table>
+			<PlayerStatsTable categories={data.players[side]} />
 		</section>
 	{/each}
 {/if}

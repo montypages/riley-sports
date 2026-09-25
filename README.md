@@ -45,7 +45,7 @@ This is a sports app I built for my son, Riley so he can keep up with his favori
   - Turnovers
   - Penalties
   - Time of Possession
-- Stats table with table headings
+- ~~Stats table with table headings~~
   - Player name = F. Lastname
   - Name column sticky, stats columns side-scroll
   - Passing

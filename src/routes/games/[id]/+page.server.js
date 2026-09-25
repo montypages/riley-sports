@@ -167,6 +167,34 @@ async function loadNflGameDetail(fetch, eventId) {
 		});
 	}
 
+	const TEAM_STAT_ROWS = [
+		{ key: 'firstDowns', label: 'First Downs' },
+		{ key: 'thirdDownEff', label: '3rd Down Efficiency' },
+		{ key: 'fourthDownEff', label: '4th Down Efficiency' },
+		{ key: 'totalYards', label: 'Total Yards' },
+		{ key: 'netPassingYards', label: 'Passing Yards' },
+		{ key: 'rushingYards', label: 'Rushing Yards' },
+		{ key: 'totalOffensivePlays', label: 'Total Plays' }, // real key is totalOffensivePlays, not totalPlays
+		{ key: 'turnovers', label: 'Turnovers' },
+		{ key: 'totalPenaltiesYards', label: 'Penalties' },
+		{ key: 'possessionTime', label: 'Time of Possession' }
+	];
+
+	function buildTeamStatsComparison(boxscoreTeams, awayId, homeId) {
+		const byName = (teamId) =>
+			Object.fromEntries(
+				(boxscoreTeams?.find((t) => t.team.id === teamId)?.statistics ?? []).map((s) => [s.name, s.displayValue])
+			);
+		const awayStats = byName(awayId);
+		const homeStats = byName(homeId);
+
+		return TEAM_STAT_ROWS.map((row) => ({
+			label: row.label,
+			away: awayStats[row.key] ?? '-',
+			home: homeStats[row.key] ?? '-'
+		}));
+	}
+
 	return {
 		league: 'nfl',
 		away: {
@@ -185,30 +213,35 @@ async function loadNflGameDetail(fetch, eventId) {
 		},
 		periods,
 		players: {
-			away: extractNflPlayers(data.boxscore?.players, away.team.id),
-			home: extractNflPlayers(data.boxscore?.players, home.team.id)
+			away: extractNflPlayerStats(data.boxscore?.players, away.team.id),
+			home: extractNflPlayerStats(data.boxscore?.players, home.team.id)
 		},
 		status: status,
 		compStatus: compStatus,
 		homeLeaders: homeLeaders,
 		awayLeaders: awayLeaders,
 		currentPlay: currentPlay,
-		drives: getNflDrives(data.drives)
+		drives: getNflDrives(data.drives),
+		teamStats: buildTeamStatsComparison(data.boxscore?.teams, away.team.id, home.team.id)
 	};
 }
 
-function extractNflPlayers(boxscorePlayers, teamId) {
+function formatPlayerName(fullName) {
+	const parts = fullName.trim().split(' ');
+	if (parts.length < 2) return fullName;
+	return `${parts[0][0]}. ${parts.slice(1).join(' ')}`;
+}
+
+function extractNflPlayerStats(boxscorePlayers, teamId) {
 	const teamEntry = boxscorePlayers?.find((t) => t.team.id === teamId);
 	if (!teamEntry) return [];
-	const rows = [];
-	for (const category of teamEntry.statistics ?? []) {
-		for (const athlete of category.athletes ?? []) {
-			rows.push({
-				name: athlete.athlete.displayName,
-				role: category.name, // "passing", "rushing", etc.
-				summary: athlete.stats?.join(', ') ?? ''
-			});
-		}
-	}
-	return rows;
+	return (teamEntry.statistics ?? []).map((category) => ({
+		name: category.name, // "passing", "rushing", etc.
+		label: category.text ?? category.name,
+		labels: category.labels ?? [],
+		athletes: (category.athletes ?? []).map((a) => ({
+			name: formatPlayerName(a.athlete.displayName),
+			stats: a.stats ?? []
+		}))
+	}));
 }
